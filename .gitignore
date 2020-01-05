@@ -33,3 +33,6 @@ out/
 
 ### database
 *.db*
+
+### local
+local.properties
