@@ -6,9 +6,9 @@ import org.apache.ibatis.annotations.Select
 
 @Mapper
 interface MovieMapper {
-    @Select("SELECT ROWID,* FROM movie")
-    fun search(): List<Movie>
+    @Select("SELECT ROWID,* FROM movie WHERE movie MATCH #{query}")
+    fun search(query: String): List<Movie>
 
     @Select("SELECT ROWID, * from movie WHERE ROWID = #{rowid}")
-    fun searchById(rowid: Int): Movie
+    fun findById(rowid: Int): Movie
 }
