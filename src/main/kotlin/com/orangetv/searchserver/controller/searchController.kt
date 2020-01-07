@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*
 class searchController(val movieRepo: MovieRepo) {
 
     @GetMapping
-    fun sayHello(@RequestParam("q") query: String): List<Movie> {
+    fun search(@RequestParam("q") query: String): List<Movie> {
         return movieRepo.search(query)
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository
 @Repository
 class MovieRepo(val movieMapper: MovieMapper) {
 
-    fun search(query: String) = movieMapper.search(query)
-    fun findById(rowid: Int) = movieMapper.findById(rowid)
+    fun search(query: String) = movieMapper.search("%${query}%")
+    fun findAfter(id: Int, limit: Int) = movieMapper.findAfter(id, limit)
+    fun findById(id: Int) = movieMapper.findById(id)
 }
