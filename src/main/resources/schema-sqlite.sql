@@ -4,5 +4,6 @@ create table movie(
     title text unique,
     poster_url varchar(100),
     video_url varchar(100),
+    host varchar(100),
     description text
 );
