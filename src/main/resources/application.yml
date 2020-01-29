@@ -1,0 +1,35 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    driver-class-name: org.sqlite.JDBC
+    url: jdbc:sqlite:${user.dir}/server.db
+    sql-script-encoding: utf-8
+    platform: sqlite
+    username:
+    password:
+
+    # Spring Boot automatically creates the schema of an embedded DataSource.
+    # This behavior can be customized by using the spring.datasource.initialization-mode property.
+    # For instance, if you want to always initialize the DataSource regardless of its type:
+    initialization-mode: always
+
+# mybatis
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+
+zuul:
+  routes:
+    resource:
+      path: /resource/**
+      url: http://localhost:9000
+    user:
+      path: /user/**
+      url: http://localhost:9999/uaa/user
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.web: DEBUG

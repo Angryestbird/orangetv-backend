@@ -19,9 +19,11 @@ configurations {
 }
 
 repositories {
-    //	mavenCentral()
+//    mavenCentral()
     maven(url = "https://maven.aliyun.com/repository/central")
 }
+
+extra["springCloudVersion"] = "Hoxton.SR1"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -30,10 +32,16 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.1")
     implementation("org.xerial:sqlite-jdbc")
+    implementation("org.springframework.cloud:spring-cloud-starter-netflix-zuul")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
-//    runtimeOnly("com.h2database:h2")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
+    }
+}
+
+dependencyManagement {
+    imports {
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
     }
 }
 
