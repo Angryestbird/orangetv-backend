@@ -7,8 +7,8 @@ spring:
     url: jdbc:sqlite:${user.dir}/server.db
     sql-script-encoding: utf-8
     platform: sqlite
-    username:
-    password:
+    username: user
+    password: pass
 
     # Spring Boot automatically creates the schema of an embedded DataSource.
     # This behavior can be customized by using the spring.datasource.initialization-mode property.

@@ -1,4 +1,4 @@
-package com.orangetv.searchserver.util
+package com.orangetv.server.util
 
 import java.net.URLDecoder
 import java.net.URLEncoder

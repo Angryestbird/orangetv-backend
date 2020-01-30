@@ -1,4 +1,4 @@
-package com.orangetv.searchserver.entity
+package com.orangetv.server.entity
 
 /**
  * Assign a default value to each primary constructor parameter

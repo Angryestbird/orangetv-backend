@@ -1,7 +1,7 @@
-package com.orangetv.searchserver.controller
+package com.orangetv.server.controller
 
-import com.orangetv.searchserver.entity.Movie
-import com.orangetv.searchserver.repository.MovieRepo
+import com.orangetv.server.entity.Movie
+import com.orangetv.server.repository.MovieRepo
 import org.springframework.web.bind.annotation.*
 
 @RestController

@@ -1,4 +1,4 @@
-package com.orangetv.searchserver.entity
+package com.orangetv.server.entity
 
 data class User(
         val id: Int,

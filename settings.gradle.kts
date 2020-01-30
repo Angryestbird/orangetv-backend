@@ -1,1 +1,1 @@
-rootProject.name = "search-server"
+rootProject.name = "orangetv-server"

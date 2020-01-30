@@ -1,4 +1,4 @@
-package com.orangetv.searchserver
+package com.orangetv.server
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

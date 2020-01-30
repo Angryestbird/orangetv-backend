@@ -1,12 +1,14 @@
-package com.orangetv.searchserver.controller
+package com.orangetv.server.controller
 
-import com.orangetv.searchserver.domin.UploadDto
-import com.orangetv.searchserver.entity.Movie
-import com.orangetv.searchserver.repository.MovieRepo
+import com.orangetv.server.domin.UploadDto
+import com.orangetv.server.entity.Movie
+import com.orangetv.server.repository.MovieRepo
+import org.springframework.cloud.netflix.zuul.filters.ZuulProperties
+import org.springframework.cloud.netflix.zuul.web.ZuulHandlerMapping
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/movie")
+@RequestMapping("/api/v1/movie")
 class MovieController(val movieRepo: MovieRepo) {
 
     @GetMapping("/{id}.json")

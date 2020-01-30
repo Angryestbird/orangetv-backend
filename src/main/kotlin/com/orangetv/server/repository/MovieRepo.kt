@@ -1,7 +1,7 @@
-package com.orangetv.searchserver.repository
+package com.orangetv.server.repository
 
-import com.orangetv.searchserver.entity.Movie
-import com.orangetv.searchserver.mapper.MovieMapper
+import com.orangetv.server.entity.Movie
+import com.orangetv.server.mapper.MovieMapper
 import org.apache.ibatis.session.ExecutorType
 import org.apache.ibatis.session.SqlSessionFactory
 import org.springframework.stereotype.Repository
