@@ -19,7 +19,6 @@ spring:
       # name and password is effective only if web security is not enabled
       name: username
       password: password
-  sessions: if-required
 
 security:
   oauth2:
@@ -27,6 +26,7 @@ security:
       clientId: orangetv-android
       clientSecret: orangetv-android-secret
       authorized-grant-types: authorization_code,refresh_token,password
+      redirect-uri: http://example.com
       #accessTokenValiditySeconds: 10
       scope: openid
 
@@ -40,9 +40,6 @@ zuul:
     resource:
       path: /resource/**
       url: http://localhost:9000
-    user:
-      path: /user/**
-      url: http://localhost:9999/uaa/user
 
 logging:
   level:
