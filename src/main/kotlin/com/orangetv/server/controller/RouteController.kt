@@ -4,6 +4,7 @@ import com.orangetv.server.entity.Route
 import com.orangetv.server.mapper.RouteMapper
 import org.springframework.cloud.netflix.zuul.filters.ZuulProperties
 import org.springframework.cloud.netflix.zuul.web.ZuulHandlerMapping
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
 
 
@@ -26,6 +27,7 @@ class RouteController(val zuulProperties: ZuulProperties,
         }
     }
 
+    @Transactional
     @DeleteMapping("/{id}")
     fun removeRoute(@PathVariable("id") id: Int)
             : Map<String, ZuulProperties.ZuulRoute>? {

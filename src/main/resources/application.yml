@@ -14,6 +14,21 @@ spring:
     # This behavior can be customized by using the spring.datasource.initialization-mode property.
     # For instance, if you want to always initialize the DataSource regardless of its type:
     initialization-mode: always
+  security:
+    user:
+      # name and password is effective only if web security is not enabled
+      name: username
+      password: password
+  sessions: if-required
+
+security:
+  oauth2:
+    client:
+      clientId: orangetv-android
+      clientSecret: orangetv-android-secret
+      authorized-grant-types: authorization_code,refresh_token,password
+      #accessTokenValiditySeconds: 10
+      scope: openid
 
 # mybatis
 mybatis:
@@ -33,3 +48,9 @@ logging:
   level:
     org.springframework.security: DEBUG
     org.springframework.web: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
