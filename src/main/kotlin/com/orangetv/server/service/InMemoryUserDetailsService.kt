@@ -4,12 +4,15 @@ import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.provisioning.InMemoryUserDetailsManager
-import org.springframework.stereotype.Service
 
-@Service
-class UserDetailsService : UserDetailsService {
+/**
+ * Enable this service only for testing
+ * If enable this service, [JdbcUserDetailsService] should be disabled
+ */
+//@Service
+class InMemoryUserDetailsService : UserDetailsService {
 
-    val userDetailsManager: InMemoryUserDetailsManager = InMemoryUserDetailsManager(
+    private val userDetailsManager: InMemoryUserDetailsManager = InMemoryUserDetailsManager(
             User.withUsername("user")
                     .password("password")
                     .roles("USER")

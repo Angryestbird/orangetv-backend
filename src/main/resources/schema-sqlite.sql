@@ -1,6 +1,28 @@
+drop table if exists user;
+drop table if exists authority;
 drop table if exists movie;
 drop table if exists movie_route;
 drop table if exists route;
+
+create table user(
+    id integer primary key,
+    email varchar(100),
+    password varchar(100),
+    motto varchar(300),
+    name varchar(100),
+    enabled integer
+);
+
+create unique index index_user
+on user (email);
+
+create table authority(
+    role varchar(100),
+    user_id integer
+);
+
+create index index_authority
+on authority (role, user_id);
 
 create table movie(
     id integer primary key,

@@ -10,7 +10,6 @@ import org.springframework.cloud.netflix.zuul.EnableZuulProxy
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.annotation.Order
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.core.authority.AuthorityUtils
@@ -38,9 +37,7 @@ fun main(args: Array<String>) {
 
 @Configuration
 @Order(-20)
-class SecurityConfig(
-        val authenticationConfiguration: AuthenticationConfiguration
-) : WebSecurityConfigurerAdapter() {
+class SecurityConfig : WebSecurityConfigurerAdapter() {
 
     @Bean
     fun passwordEncoder(): PasswordEncoder {
