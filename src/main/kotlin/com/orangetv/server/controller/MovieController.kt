@@ -3,8 +3,6 @@ package com.orangetv.server.controller
 import com.orangetv.server.domin.UploadDto
 import com.orangetv.server.entity.Movie
 import com.orangetv.server.repository.MovieRepo
-import org.springframework.cloud.netflix.zuul.filters.ZuulProperties
-import org.springframework.cloud.netflix.zuul.web.ZuulHandlerMapping
 import org.springframework.web.bind.annotation.*
 
 @RestController

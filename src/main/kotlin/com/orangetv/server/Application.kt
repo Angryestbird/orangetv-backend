@@ -22,6 +22,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer
 import org.springframework.security.oauth2.provider.client.BaseClientDetails
 import org.springframework.security.oauth2.provider.expression.OAuth2MethodSecurityExpressionHandler
+import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 import java.util.*
 
@@ -30,6 +31,10 @@ import java.util.*
 @EnableResourceServer
 @EnableZuulProxy
 class Application {
+
+    @Bean
+    fun tokenStore() = InMemoryTokenStore()
+
     @Bean
     fun httpTraceRepository() = InMemoryHttpTraceRepository()
 }

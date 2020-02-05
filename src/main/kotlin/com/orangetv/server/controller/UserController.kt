@@ -5,13 +5,16 @@ import com.orangetv.server.entity.Authority
 import com.orangetv.server.entity.User
 import com.orangetv.server.mapper.AuthorityMapper
 import com.orangetv.server.mapper.UserMapper
-import org.springframework.security.access.prepost.PreAuthorize
+import org.springframework.security.access.AccessDeniedException
+import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.security.oauth2.provider.OAuth2Authentication
+import org.springframework.security.oauth2.provider.token.ConsumerTokenServices
+import org.springframework.security.oauth2.provider.token.TokenStore
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
 import java.security.Principal
-import javax.annotation.security.PermitAll
 import javax.validation.Valid
 
 @RestController
@@ -19,35 +22,45 @@ import javax.validation.Valid
 class UserController(
         val userMapper: UserMapper,
         val authorityMapper: AuthorityMapper,
-        val passwordEncoder: PasswordEncoder
+        val passwordEncoder: PasswordEncoder,
+        val tokenServices: ConsumerTokenServices,
+        val tokenStore: TokenStore
 ) {
 
-    @GetMapping
+    @GetMapping("/info")
     fun getUserInfo(user: Principal): Principal {
         return user
     }
 
-    @DeleteMapping
     @Transactional
-    fun removeUser(@RequestBody userDto: UserDto, user: Principal): UserDto {
-//        val user = userDto.user
-//        userDto.authorities.forEach {
-//            authorityMapper.insert(Authority(user.id, it.authority))
-//        }
-//        userMapper.insert(user)
+    @DeleteMapping("/info")
+    fun removeUser(
+            @Valid @RequestBody user: User,
+            @AuthenticationPrincipal userDto: UserDto,
+            principal: Principal
+    ): UserDto {
+
+        if (passwordEncoder.encode(user.password) != userDto.password) {
+            throw AccessDeniedException("user password not match")
+        }
+        val authentication = principal as OAuth2Authentication
+        val accessToken = tokenStore.getAccessToken(authentication)
+        tokenServices.revokeToken(accessToken.value)
+
+        val userId = userMapper.findByEmail(userDto.email)!!.id
+        authorityMapper.removeByUser(userId)
+        userMapper.delete(userId)
         return userDto
     }
 
     @PostMapping
     @Transactional
-    @PermitAll
     fun addUser(@Valid @RequestBody user: User): UserDto {
-        userMapper.insert(
-                user.run {
-                    copy(password = passwordEncoder.encode(this.password))
-                }
-        )
-        authorityMapper.insert(Authority(user.id, ROLE_USER))
+        val encodedUser = user.run {
+            copy(password = passwordEncoder.encode(this.password))
+        }
+        userMapper.insert(encodedUser)
+        authorityMapper.insert(Authority(encodedUser.id, ROLE_USER))
         return UserDto.fromUser(user, setOf(SimpleGrantedAuthority(ROLE_USER)))
     }
 
