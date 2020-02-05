@@ -7,10 +7,10 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager
 
 /**
  * Enable this service only for testing
- * If enable this service, [JdbcUserDetailsService] should be disabled
+ * If enable this service, [OrangeTvUserService] should be disabled
  */
 //@Service
-class InMemoryUserDetailsService : UserDetailsService {
+class InMemoryUserService : UserDetailsService {
 
     private val userDetailsManager: InMemoryUserDetailsManager = InMemoryUserDetailsManager(
             User.withUsername("user")

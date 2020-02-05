@@ -36,6 +36,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
     implementation("org.springframework.cloud:spring-cloud-starter-oauth2")
     implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.1")
+    implementation("org.hibernate.validator:hibernate-validator")
     implementation("org.xerial:sqlite-jdbc")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {

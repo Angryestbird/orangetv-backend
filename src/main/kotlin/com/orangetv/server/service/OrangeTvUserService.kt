@@ -13,12 +13,12 @@ import org.springframework.stereotype.Service
  * a [UserDetailsService] use MyBatis to store user credential
  */
 @Service
-class JdbcUserDetailsService(
+class OrangeTvUserService(
         val userMapper: UserMapper,
         val authorityMapper: AuthorityMapper
 ) : UserDetailsService {
 
-    override fun loadUserByUsername(email: String): UserDetails? {
+    override fun loadUserByUsername(email: String): UserDetails {
 
         val user = userMapper.findByEmail(email)
         val authorities = user?.let { authorityMapper.findByUser(it.id) }
@@ -28,6 +28,7 @@ class JdbcUserDetailsService(
         }
 
         return UserDto(
+                user.name,
                 user.email,
                 user.password,
                 authorities.map {

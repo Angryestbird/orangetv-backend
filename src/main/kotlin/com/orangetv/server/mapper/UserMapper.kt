@@ -8,7 +8,7 @@ interface UserMapper {
 
     @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
     @Insert("""INSERT INTO user (name, email, password, motto, enabled) 
-        VALUES (#{name}, #{email}, #{password}, #{motto}), #{enabled})""")
+        VALUES (#{name}, #{email}, #{password}, #{motto}, #{enabled})""")
     fun insert(user: User): Int
 
     @Delete("""delete from user where id=#{id}""")

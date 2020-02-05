@@ -1,6 +1,5 @@
 package com.orangetv.server
 
-import org.springframework.boot.actuate.trace.http.HttpTraceRepository
 import org.springframework.boot.actuate.trace.http.InMemoryHttpTraceRepository
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.security.oauth2.OAuth2ClientProperties
@@ -10,7 +9,11 @@ import org.springframework.cloud.netflix.zuul.EnableZuulProxy
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.annotation.Order
+import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
+import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.core.authority.AuthorityUtils
 import org.springframework.security.crypto.password.NoOpPasswordEncoder
@@ -18,6 +21,8 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer
 import org.springframework.security.oauth2.provider.client.BaseClientDetails
+import org.springframework.security.oauth2.provider.expression.OAuth2MethodSecurityExpressionHandler
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 import java.util.*
 
 @SpringBootApplication
@@ -26,9 +31,7 @@ import java.util.*
 @EnableZuulProxy
 class Application {
     @Bean
-    fun httpTraceRepository(): HttpTraceRepository {
-        return InMemoryHttpTraceRepository()
-    }
+    fun httpTraceRepository() = InMemoryHttpTraceRepository()
 }
 
 fun main(args: Array<String>) {
@@ -36,6 +39,7 @@ fun main(args: Array<String>) {
 }
 
 @Configuration
+@EnableWebSecurity
 @Order(-20)
 class SecurityConfig : WebSecurityConfigurerAdapter() {
 
@@ -48,14 +52,42 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
         http
                 .formLogin().permitAll()
                 .and()
-                .requestMatchers().antMatchers("/login", "/oauth/authorize", "/oauth/confirm_access")
+                .authorizeRequests()
+                .requestMatchers(
+                        AntPathRequestMatcher("/user", "POST")
+                ).permitAll()
+                .anyRequest().authenticated()
                 .and()
-                .authorizeRequests().anyRequest().authenticated()
+                .csrf()
+                .ignoringRequestMatchers(
+                        AntPathRequestMatcher("/user", "POST")
+                )
+                .and()
+                .requestMatchers().antMatchers(
+                        "/login",
+                        "/oauth/authorize",
+                        "/oauth/confirm_access",
+                        "/user"
+                )
     }
 }
 
 @Configuration
-class BaseClientDetailsConfiguration protected constructor(private val client: OAuth2ClientProperties) {
+@EnableGlobalMethodSecurity(
+        prePostEnabled = true,
+        proxyTargetClass = true
+)
+class MethodSecurityConfig : GlobalMethodSecurityConfiguration() {
+
+    override fun createExpressionHandler(): MethodSecurityExpressionHandler {
+        return OAuth2MethodSecurityExpressionHandler()
+    }
+}
+
+@Configuration
+class BaseClientDetailsConfiguration protected constructor(
+        private val client: OAuth2ClientProperties
+) {
     @Bean
     @ConfigurationProperties(prefix = "security.oauth2.client")
     fun oauth2ClientDetails(): BaseClientDetails {
