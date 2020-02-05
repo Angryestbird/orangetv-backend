@@ -2,6 +2,7 @@ package com.orangetv.server.service
 
 import com.orangetv.server.domin.UserDto
 import com.orangetv.server.mapper.AuthorityMapper
+import com.orangetv.server.mapper.RoleMapper
 import com.orangetv.server.mapper.UserMapper
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
@@ -15,7 +16,8 @@ import org.springframework.stereotype.Service
 @Service
 class OrangeTvUserService(
         val userMapper: UserMapper,
-        val authorityMapper: AuthorityMapper
+        val authorityMapper: AuthorityMapper,
+        val roleMapper: RoleMapper
 ) : UserDetailsService {
 
     override fun loadUserByUsername(email: String): UserDetails {
@@ -32,7 +34,8 @@ class OrangeTvUserService(
                 user.email,
                 user.password,
                 authorities.map {
-                    SimpleGrantedAuthority(it.role)
+                    val role = roleMapper.findById(it.roleId)
+                    SimpleGrantedAuthority(role!!.roleName)
                 },
                 user.motto
         )

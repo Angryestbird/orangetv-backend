@@ -15,6 +15,6 @@ interface AuthorityMapper {
     @Delete("""DELETE FROM authority WHERE user_id=#{userId}""")
     fun removeByUser(userId: Int): Int
 
-    @Insert("""INSERT INTO authority (user_id, role) VALUES (#{userId}, #{role})""")
+    @Insert("""INSERT INTO authority (user_id, role_id) VALUES (#{userId}, #{roleId})""")
     fun insert(authority: Authority): Int
 }

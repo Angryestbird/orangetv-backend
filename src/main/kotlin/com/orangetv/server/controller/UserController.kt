@@ -4,6 +4,7 @@ import com.orangetv.server.domin.UserDto
 import com.orangetv.server.entity.Authority
 import com.orangetv.server.entity.User
 import com.orangetv.server.mapper.AuthorityMapper
+import com.orangetv.server.mapper.RoleMapper
 import com.orangetv.server.mapper.UserMapper
 import org.springframework.security.access.AccessDeniedException
 import org.springframework.security.core.annotation.AuthenticationPrincipal
@@ -21,6 +22,7 @@ import javax.validation.Valid
 @RequestMapping("/user")
 class UserController(
         val userMapper: UserMapper,
+        val roleMapper: RoleMapper,
         val authorityMapper: AuthorityMapper,
         val passwordEncoder: PasswordEncoder,
         val tokenServices: ConsumerTokenServices,
@@ -60,7 +62,8 @@ class UserController(
             copy(password = passwordEncoder.encode(this.password))
         }
         userMapper.insert(encodedUser)
-        authorityMapper.insert(Authority(encodedUser.id, ROLE_USER))
+        val role = roleMapper.findByName(ROLE_USER)
+        authorityMapper.insert(Authority(encodedUser.id, role!!.id))
         return UserDto.fromUser(user, setOf(SimpleGrantedAuthority(ROLE_USER)))
     }
 

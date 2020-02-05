@@ -1,5 +1,5 @@
 insert into user (id, email, password, motto, name, enabled) values (
-    1,
+    0,
     "user@example.com",
     "password",
     "hello",
@@ -7,7 +7,7 @@ insert into user (id, email, password, motto, name, enabled) values (
     1
 );
 insert into user (id ,email, password, motto, name, enabled) values (
-    2,
+    1,
     "admin@example.com",
     "password",
     "hello",
@@ -15,9 +15,12 @@ insert into user (id ,email, password, motto, name, enabled) values (
     1
 );
 
-insert into authority (user_id, role) values (1,"ROLE_USER");
-insert into authority (user_id, role) values (2,"ROLE_USER");
-insert into authority (user_id, role) values (2,"ROLE_ADMIN");
+insert into role (id, role_name) values (0, "ROLE_USER");
+insert into role (id, role_name) values (1, "ROLE_ADMIN");
+
+insert into authority (user_id, role_id) values (0, 0);
+insert into authority (user_id, role_id) values (1, 0);
+insert into authority (user_id, role_id) values (1, 1);
 
 insert into movie (title, poster_url, video_url) values (
     "变形金刚BD国英双语双字",
