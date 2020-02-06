@@ -24,9 +24,11 @@ import org.springframework.security.oauth2.provider.client.BaseClientDetails
 import org.springframework.security.oauth2.provider.expression.OAuth2MethodSecurityExpressionHandler
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher
+import org.springframework.transaction.annotation.EnableTransactionManagement
 import java.util.*
 
 @SpringBootApplication
+@EnableTransactionManagement
 @EnableAuthorizationServer
 @EnableResourceServer
 @EnableZuulProxy
@@ -61,6 +63,7 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
                 .requestMatchers(
                         AntPathRequestMatcher("/user", "POST")
                 ).permitAll()
+                .antMatchers("/resource**/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .csrf()
@@ -72,6 +75,7 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
                         "/login",
                         "/oauth/authorize",
                         "/oauth/confirm_access",
+                        "/resource**/**",
                         "/user"
                 )
     }

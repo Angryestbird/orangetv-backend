@@ -9,6 +9,5 @@ data class Movie(
         val title: String = "",
         val posterUrl: String = "",
         val videoUrl: String = "",
-        val host: String = "localhost:8080",
         val description: String = ""
 )

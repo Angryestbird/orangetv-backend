@@ -1,0 +1,41 @@
+{
+  "hostUrl": "http://localhost:8000/",
+  "movies": [
+    {
+      "title": "变形金刚BD国英双语双字",
+      "posterUrl": "poster/变形金刚1.png",
+      "videoUrl": "变形金刚BD国英双语双字.mkv",
+      "description": ""
+    },
+    {
+      "title": "变形金刚2BD双语双字",
+      "posterUrl": "poster/变形金刚2.jpeg",
+      "videoUrl": "变形金刚2BD双语双字.mkv",
+      "description": ""
+    },
+    {
+      "title": "变形金刚3BD双语双字",
+      "posterUrl": "poster/变形金刚3.jpg",
+      "videoUrl": "变形金刚3BD双语双字.mkv",
+      "description": ""
+    },
+    {
+      "title": "变形金刚4：绝迹重生BD国英双语中英双字",
+      "posterUrl": "poster/变形金刚4.jpg",
+      "videoUrl": "变形金刚4：绝迹重生BD国英双语中英双字.mkv",
+      "description": ""
+    },
+    {
+      "title": "变形金刚5：最后的骑士BD中英双字",
+      "posterUrl": "poster/变形金刚5.jpg",
+      "videoUrl": "变形金刚5：最后的骑士BD中英双字.mp4",
+      "description": ""
+    },
+    {
+      "title": "古墓丽影：源起之战HD中英双字修正",
+      "posterUrl": "poster/古墓丽影.jpeg",
+      "videoUrl": "古墓丽影：源起之战HD中英双字修正.mp4",
+      "description": ""
+    }
+  ]
+}

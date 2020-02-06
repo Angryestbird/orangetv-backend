@@ -38,6 +38,9 @@ create table movie(
     description text
 );
 
+create unique index index_movie
+on movie (title);
+
 create table movie_route(
     id integer primary key,
     movie_id integer,
